@@ -1,0 +1,456 @@
+<html>
+<head>
+<title>Jump User's Manual</title>
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font size=5><b>Jump User's Manual</b></font><br>
+<font size=4>Version 1.0 Beta 4</font><br>
+<br>
+<a href="mailto:gregh@lightspeed.net">Greg Hewgill</a> (gregh@lightspeed.net)<br>
+
+<hr>
+
+<font size=4><b>Table of Contents</b></font><br>
+<br>
+<b>1 <a href="#jump">Jump</a></b><br>
+&nbsp;1.1 <a href="#whatis">What is Jump?</a><br>
+&nbsp;1.2 <a href="#features">Jump Features</a><br>
+&nbsp;1.3 <a href="#package">The Jump Package</a><br>
+&nbsp;1.4 <a href="#requirements">Requirements</a><br>
+&nbsp;1.5 <a href="#installation">Installation</a><br>
+&nbsp;1.6 <a href="#limitations">Limitations</a><br>
+<br>
+<b>2 <a href="#using">Using Jump</a></b><br>
+&nbsp;2.1 <a href="#requirements">Program Requirements</a><br>
+&nbsp;2.2 <a href="#running">Running Jump</a><br>
+&nbsp;2.3 <a href="#options">Options</a><br>
+&nbsp;2.4 <a href="#progoptions">Program-specific Options</a><br>
+<br>
+<b>3 <a href="#technical">Technical Information</a></b><br>
+&nbsp;3.1 <a href="#native">Native code interface</a><br>
+&nbsp;3.2 <a href="#miscellaneous">Miscellaneous</a><br>
+<br>
+<b><a href="#appendices">Appendices</a></b><br>
+&nbsp;A <a href="#future">Future Enhancements</a><br>
+&nbsp;B <a href="#thanks">Thanks to...</a><br>
+
+<hr>
+<a name="jump"></a>
+<font size=5><b>1 Jump</b></font><br>
+<br>
+
+<a name="whatis"></a>
+<font size=4>1.1 What is Jump?</font><br>
+
+<p>Jump is a program that allows developers to write <a href="http://www.javasoft.com">
+Java<sup>TM</sup></a> code for the Pilot handheld PDA from
+<a href="http://www.usr.com/palm">USRobotics</a>. This has nothing to do
+with the Internet, HTTP, or the World Wide Web, and in particular will not allow you
+to run or write Java "applets". It does allow you to use a well-designed, easy to learn
+language to write applications for the Pilot.</p>
+
+<p>Jump works by reading the .class files produced by a Java compiler, creating 68000 assembly language
+.asm files as output. The .asm files are then assembled by Pila (the Pilot Assembler) to produce
+a .prc file which can be loaded directly into the Pilot. Jump is essentially the "back end" of a compiler
+(a Java source-to-bytecode compiler is the "front end").</p>
+
+<p>The .prc files created by Jump are self contained and do not require any Java runtime support to be
+present on the Pilot.</p>
+
+<a name="features"></a>
+<br><font size=4>1.2 Jump Features</font><br>
+
+<p>There are no features yet. :)</p>
+
+<a name="package"></a>
+<br><font size=4>1.3 The Jump Package</font><br>
+
+<p>The Jump package includes the following files:</p>
+
+<table>
+<tr><th align=left>File&nbsp;&nbsp;&nbsp;&nbsp;<th align=left>Description</th></tr>
+<tr><td><a href="readme.txt">Readme.txt</a></td><td>Last minute notes and revision history. Be sure to read this file!</td></tr>
+<tr><td>Jump.exe</td><td>Main Jump program as a Win32 executable.</td></tr>
+<tr><td>Jump.zip</td><td>Jump class files for use on non-Win32 platforms.</td></tr>
+<tr><td>Jump.htm</td><td>Jump documentation (this file).</td></tr>
+<tr><td>palmos.zip</td><td>palmos package class and source files.</td></tr>
+<tr><td>native-java.asm</td><td>Native 68K implementations of various java.lang methods.</td></tr>
+<tr><td>native-palmos.asm</td><td>Native 68K stubs for most of the PalmOS API functions.</td></tr>
+<tr><td>native-*.asm</td><td>Other native 68K method implementations.</td></tr>
+<tr><td>Jump.properties</td><td>Sample Jump configuration file.</td></tr>
+<tr><td>jump-source.zip</td><td>Jump source code. Read the included readme-source.txt for more info.</td></tr>
+<tr><td>DecHex\*</td><td>Sample program files.</td></tr>
+<tr><td>Hello\*</td><td>Sample program files.</td></tr>
+<tr><td>Life\*</td><td>Sample program files.</td></tr>
+</table>
+
+<a name="requirements"></a>
+<br><font size=4>1.4 Requirements</font><br>
+
+<p>Jump requires the following software:
+
+<ul>
+<li>A correctly installed Java VM. Jump itself is written in Java and needs a VM to run.
+A good way to get a VM for Windows is to download Microsoft's <a href="http://www.microsoft.com/java/sdk/">Java SDK</a>
+and install it. I believe this is also required in order to run the executable version of Jump
+(Jump.exe). You might want to get this and install it even if you already have Internet
+Explorer, because the Java SDK contains the latest VM for Windows.
+<li>A Java compiler. I have tried both <a href="http://www.javasoft.com/nav/download/index.html">Sun's JDK</a> and
+<a href="http://www.microsoft.com/java/sdk">Microsoft's Java SDK</a> and they both work.
+Other compilers (<a href="http://www.symantec.com/cafe">Symantec Caf&eacute;</a>,
+<a href="http://www.borland.com/jbuilder">Borland JBuilder</a>, etc) will most likely work too.
+<li>The Pilot <a href="http://www.massena.com/darrin/pilot/asdk/asdknews.htm">ASDK</a>.
+Pila (the Pilot Assembler) is bundled in the ASDK and is required by Jump.
+Pilrc (the Pilot Resource Compiler) is not strictly required but makes resource creation easier.
+</ul>
+
+<p>In the ASDK, you will also find lots of tools and information that will be indispensable for
+developing Pilot applications.</p>
+
+<a name="installation"></a>
+<br><font size=4>1.5 Installation</font><br>
+
+<p><b>NOTE: Do not use PKUNZIP!</b> Use WinZip or another 32-bit unzip program. PKUNZIP, being a DOS program,
+does not handle long file names and will really screw this up.</p>
+
+<ol>
+<li>Create a directory, for example c:\jump.
+<li>Extract the contents of the Jump distribution archive into this directory. Be sure to use the stored
+directory names so that each sample program ends up in its own directory.
+<li>Unzip the palmos package (palmos.zip) into this same directory, making sure you use the directory names
+stored in the palmos.zip file. The end result should be a bunch of .java and .class files in the c:\jump\palmos
+directory, <b>not</b> in c:\jump or c:\jump\palmos\palmos.
+<li>Modify your Java CLASSPATH environment variable to include the new c:\jump directory. You can do
+this with a command such as <pre>set classpath=c:\jump</pre>See your Java tools
+documentation if you need more information about the CLASSPATH variable.
+<li>Find the classes.zip file that was installed with your Java system, and unzip it into the directory where
+you found it (be sure to use the stored directory names). Currently Jump does not know how to look inside a
+zip file for system classes, so this step is necessary for now.
+<ul>
+<li><b>Sun JDK</b>: This file can be found in c:\java\lib\classes.zip (or similar path).
+<li><b>MS Java SDK</b>: This file can be found in c:\windows\java\classes\classes.zip (or similar path).
+</ul>
+</ol>
+
+<p>Once the files are properly installed, you should run through compiling one of the sample programs to make
+sure everything works.</p>
+
+<ol>
+<li>Select the sample program to try. I'll use Hello for this example.
+<li>Open a Command Prompt (MS-DOS) window, and change to the Hello subdirectory.
+<li>Compile the Hello.java program using your Java compiler (javac for the Sun JDK or jvc for MS Java SDK).
+This should create the Hello.class file. Example:
+<pre>javac Hello.java</pre>
+<li>Use Pilrc (from the ASDK) to compile the Hello.rcp file. This should create the *.bin binary resources. Example:
+<pre>pilrc Hello.rcp</pre>
+<li>Run Jump to compile the Hello class into a Pilot executable. This should create Hello.prc. Example:
+<pre>Jump Hello</pre>
+</ol>
+
+If everything goes well, you should now have a Hello.prc file that is ready to load onto your Pilot
+(or <a href="http://userzweb.lightspeed.net/~gregh/pilot/copilot">Copilot</a>). If there is a problem, check
+the following items:<p>
+
+<ul>
+<li>If the Java compiler complains about the palmos package, make sure that the CLASSPATH environment variable
+contains only the Jump installation directory (ie. c:\jump, <b>not</b> c:\jump\palmos).
+<li>If Jump says "Unable to start the application. The Java Virtual Machine cannot be found",
+then you do not have the latest Microsoft Java VM installed. You can either get the latest
+<a href="http://www.microsoft.com/java/sdk">MS Java SDK</a>, or you can unzip the Jump.zip file
+to get the Jump class files. Then run the Jump class using your Java SDK's applet viewer (this is java.exe for
+the Sun JDK).
+<li>If Jump complains about the inability to find the system classes, make sure you have unzipped the classes.zip
+file into a tree of .class files.
+<li>If Jump complains about native functions, make sure that the native-*.asm files are present and are in
+the same directory as Jump.properties.
+<li>If Pila is not in your path, edit Jump.properties to tell Jump where Pila can be found
+(see <a href="#options">section 2.3</a>).
+</ul>
+
+<a name="limitations"></a>
+<br><font size=4>1.6 Limitations</font><br>
+
+<p>The following major Java language features are not yet implemented by Jump:
+
+<ul>
+<li><i>long</i> (64-bit integer), <i>float</i> (32-bit IEEE), and <i>double</i> (64-bit IEEE) data types
+<li>Interface method calls
+<li>Multidimensional arrays (these almost work now)
+<li>Class initialization functions
+<li>Object finalize() function
+<li>Threads (probably won't ever be implemented)
+</ul>
+
+<p>There are also some other features not yet implemented:
+
+<ul>
+<li>Null pointers are not properly detected where they should be
+<li>ClassCastException is not thrown when it should be
+<li>The following opcodes:
+  <ul>
+  <li>dup_x2
+  <li>dup2_x1
+  <li>dup2_x2
+  <li>goto_w
+  <li>jsr_w
+  </ul>
+<li>32-bit multiply and divide - currently Jump uses 16-bit multiply and divide instructions which can cause various unexpected arithmetic results
+<li>The following <i>long</i> (64-bit integer) arithmetic operations:
+  <ul>
+  <li>addition
+  <li>subtraction
+  <li>multiplication
+  <li>division
+  <li>remainder
+  <li>negation
+  <li>shift right
+  <li>unsigned shift right
+  <li>comparison
+  </ul>
+<li>The following PalmOS API functions:
+  <table>
+  <tr><th align=left>Function</th><th align=left>Reason</th></td>
+  <tr><td>DmFindSortPosition</td><td>no callback functions</td></tr>
+  <tr><td>DmInsertionSort</td><td>no callback functions</td></tr>
+  <tr><td>DmQuickSort</td><td>no callback functions</td></tr>
+  <tr><td>ErrThrow</td><td>use Java throw instead</td></tr>
+  <tr><td>EvtGetPenBtnList</td><td>returns pointer to array</td></tr>
+  <tr><td>FindDrawHeader</td><td>FindParamsPtr</td></tr>
+  <tr><td>FindGetLineBounds</td><td>FindParamsPtr</td></tr>
+  <tr><td>FindSaveMatch</td><td>FindParamsPtr</td></tr>
+  <tr><td>FplXxx</td><td>PalmOS floating point library</td></tr>
+  <tr><td>FrmSetEventHandler</td><td>no callback functions</td></tr>
+  <tr><td>GetCharAttr</td><td>returns pointer to array</td></tr>
+  <tr><td>GetCharCaselessValue</td><td>returns pointer to array</td></tr>
+  <tr><td>GetCharSortValue</td><td>returns pointer to array</td></tr>
+  <tr><td>GrfMatch
+  <tr><td>GrfMatchGlyph
+  <tr><td>LstSetDrawFunction</td><td>no callback functions</td></tr>
+  <tr><td>LstSetListChoices</td><td>array of char pointers</td></tr>
+  <tr><td>PsrXxx</td><td>no callback functions</td></tr>
+  <tr><td>SlkSendPacket</td><td>arrays of structures</td></tr>
+  <tr><td>SlkSetSocketListener</td><td>no callback functions</td></tr>
+  <tr><td>StrCat</td><td>modifies string data</td></tr>
+  <tr><td>StrChr</td><td>returns address</td></tr>
+  <tr><td>StrCopy</td><td>modifies string data</td></tr>
+  <tr><td>StrItoA</td><td>modifies string data</td></tr>
+  <tr><td>StrItoH</td><td>modifies string data</td></tr>
+  <tr><td>StrStr</td><td>returns address</td></tr>
+  <tr><td>StrToLower</td><td>modifies string data</td></tr>
+  <tr><td>SysInsertionSort</td><td>no callback functions</td></tr>
+  <tr><td>SysQSort</td><td>no callback functions</td></tr>
+  <tr><td>TblSetCustomDrawProcedure</td><td>no callback functions</td></tr>
+  <tr><td>TblSetLoadDataProcedure</td><td>no callback functions</td></tr>
+  <tr><td>TblSetSaveDataProcedure</td><td>no callback functions</td></tr>
+  <tr><td>WinGetPattern</td><td>CustomPatternType</td></tr>
+  <tr><td>WinGetWindowPointer</td><td>returns pointer to structure</td></tr>
+  <tr><td>WinSetPattern</td><td>CustomPatternType</td></tr>
+  </table>
+<li>Not all of the PalmOS API constants have equivalents in the Java palmos package.
+</ul>
+
+<p>Some of the PalmOS API functions require the address of a callback routine to be passed to the API
+function. Examples of these functions are the sorting functions, FrmSetEventHandler, custom list and
+table draw functions, SlkSetSocketListener, and some others. These functions are not supported by the
+current version of Jump.</p>
+
+<hr>
+<a name="using"></a>
+<font size=5><b>2 Using Jump</b></font><br>
+<br>
+
+<a name="requirements"></a>
+<br><font size=4>2.1 Program Requirements</font><br>
+
+<p>The only requirement that Jump makes of your source code is that you have a function PilotMain in
+your main class declared like this:</p>
+
+<pre>    public static int PilotMain(int cmd, int cmdPBP, int launchFlags)
+</pre>
+
+<p>This is the function that is called when your application starts. For a normal application launch,
+cmd will be 0. This function should normally return 0.</p>
+
+<p>Resources are expected to be found in a file called <i>classname</i>.res where <i>classname</i> is the
+name of the main class passed to Jump. This file is copied verbatim into the <i>classname</i>.asm file.</p>
+
+<a name="running"></a>
+<br><font size=4>2.2 Running Jump</font><br>
+
+<p>To create a .prc file from a .class file, run the Jump.exe program with the name of your main
+class (the one containing the PilotMain method) on the command line. For example,</p>
+
+<blockquote>
+Jump Hello
+</blockquote>
+
+<p>Assuming all goes well, Jump will create a Hello.asm file and automatically run Pila to create a
+Hello.prc file.</p>
+
+<a name="options"></a>
+<br><font size=4>2.3 Options</font><br>
+
+<p>Jump accepts options anywhere on the command line. The following options are recognized:</p>
+
+<table>
+<tr><th align=left>Option&nbsp;&nbsp;&nbsp;&nbsp;</th><th align=left>Description</th></tr>
+<tr><td>-c</td><td>Compile .class file from .java file using javac if necessary.</td></tr>
+<tr><td>-d</td><td>Delete .asm file after running Pila.</td></tr>
+<tr><td>-l</td><td>Passed on to Pila to generate an assembly listing file.</td></tr>
+<tr><td>-o</td><td>Enable the peephole optimizer.</td></tr>
+<tr><td>-s</td><td>Include Copilot compatible symbols in the output file.</td></tr>
+<tr><td>-v</td><td>Verbose progress and status output.</td></tr>
+</table>
+
+<p>You may also create a file called Jump.properties in the current directory. This text file contains lines
+of the form "name=value". Valid property names are shown in the following table:</p>
+
+<table>
+<tr><th align=left>Property&nbsp;&nbsp;</th><th align=left>Default&nbsp;&nbsp;</th><th align=left>Description</th></tr>
+<tr><td>javac</td><td>javac</td><td>Name of command line Java compiler. Use jvc for MS Java SDK.</td></tr>
+<tr><td>options</td><td></td><td>Option flags (above) as they would be specified on the command line.</td></tr>
+<tr><td>pila</td><td>pila</td><td>Name of Pila assembler. May include a pathname if pila is not in your path.</td></tr>
+</table>
+
+<p>Here is an example of a Jump.properties file (the double backslashes are not a typo, they are required
+wherever you would normally use a single backslash):</p>
+
+<blockquote>
+<pre>javac=jvc
+options=-c -o
+pila=e:\\asdk\\bin\\pila
+</pre>
+</blockquote>
+
+<a name="progoptions"></a>
+<font size=4>2.3 Program-specific Options</font><br>
+
+<p>There are two program-specific options that Jump recognizes. These are specified in a
+file called <i>classname</i>.jump in the current directory. The valid options are:</p>
+
+<table>
+<tr><th align=left>Option&nbsp;&nbsp;</th><th align=left>Default&nbsp;&nbsp;</th><th align=left>Description</th></tr>
+<tr><td>appid</td><td>test</td><td>Four-letter PalmOS application ID.</td></tr>
+<tr><td>appname</td><td><i>classname</i></td><td>Name of application as it will appear in the Pilot applications list.</td></tr>
+</table>
+
+<p>Here is an example of a <i>classname</i>.jump file:</p>
+
+<blockquote>
+<pre>appname=Hello World
+appid=Helo
+</pre>
+</blockquote>
+
+<hr>
+<a name="technical"></a>
+<font size=5><b>3 Technical Information</b></font><br>
+<br>
+
+<a name="native"></a>
+<br><font size=4>3.1 Native Code Interface</font><br>
+
+<p>Jump supports the Java <i>native</i> keyword for calling methods implemented in 68K assembly language.
+This is used by Jump to implement various native parts of the java.lang package, and also to implement the
+PalmOS API function stubs. The implementations of native methods are loaded from files that begin with
+"native-" and end with ".asm". There can be as many of these files as you like; they are all searched for
+native methods.</p>
+
+<p>To create your own native methods, declare a method in a class as <i>native</i>. This indicates to
+the Java compiler and Jump that the implementation of the method is not in Java, but is an external
+method. Create a native-*.asm file to hold the implementation of the method, and write the assembler code
+for the method in this file.</p>
+
+<p>You may put more than one native method implementation in a native .asm file. Each method implementation
+must be separated by at least one blank line, and method implementations cannot contain any blank lines.</p>
+
+<p>Here is a simple example of a native method declaration and implementation:</p>
+
+<u>NativeTest.java</u>
+<pre>  class NativeTest {
+    public native static int Add(int x, int y);
+  }
+</pre>
+
+<u>native-test.asm</u>
+<pre>  NativeTest__Add:
+          link    a6,#0
+          move.l  8(a6),d0
+          add.l   12(a6),d0
+          unlk    a6
+          rts
+</pre>
+
+<p>Note that arguments to Java methods are pushed from <i>left to right</i>. This is different from the way
+arguments are passed to PalmOS API functions.</p>
+
+<a name="miscellaneous"></a>
+<br><font size=4>3.2 Miscellaneous notes</font><br>
+
+<br><b>On the garbage collector:</b><br>
+<p>It's sort of an inverse mark and sweep. Sweep and mark, if you will. :) Each allocated
+block is kept in a linked list. Each time the garbage collector is run, it traverses
+through the list and attempts to find a pointer to the current block in one of three
+places: (1) the current stack, (2) the static data area, or (3) other objects on the
+heap. If it finds something that looks like a pointer, it assumes it is and continues
+to the next block. Otherwise, it deletes the block. There is an important optimization
+though - when a pointer to a block is located, the address of the pointer is stored in
+the block itself. On the next pass through, the garbage collector first checks to see
+whether the stored pointer location still points to the block. If so, it keeps the block.
+Otherwise, it performs another search for a pointer.</p>
+
+<b>On calling PalmOS API functions:</b><br>
+<p>For calls that return a pointer to a string, the stub creates a temporary Java byte[]
+array whose data pointer is initialized with the return value of the function, then
+calls the String constructor that takes a byte[] and creates a Java String. The end
+result is that the String class makes a copy of the data in the Java memory space.</p>
+
+<p>For calls like DateToAscii that take a pointer to a buffer as a parameter, the stub
+generator makes the parameter a Java StringBuffer. Then it passes the address of the
+array data to the API function, which fills it in. After the API function return, the
+stub tweaks the length field of the StringBuffer so that the characters show up properly.</p>
+
+<hr>
+<a name="appendices"></a>
+<font size=5><b>Appendices</b></font><br>
+<br>
+
+<a name="future"></a>
+<font size=4>A Future Enhancements</font><br>
+
+<p>Here is a list of features that I would like to put into Jump. If you have any features
+you would like to see in Jump, please let me know!
+
+<ul>
+<li>A portable (Java) assembler and resource compiler, so Jump can be run on non-Windows platforms.
+</ul>
+
+<a name="thanks"></a>
+<br><font size=4>B Thanks to...</font><br>
+
+<p><i>Darrin Massena</i>
+(<a href="http://www.massena.com/darrin/pilot">Pilot Software Development</a>)
+for Pila, the Pilot Assembler. Darrin is also leading the effort to put together the
+<a href="http://www.massena.com/darrin/pilot/asdk/asdk.htm">Alternative SDK</a>,
+a suite of tools for Pilot development that is independent of the Macintosh.</p>
+
+<p><i>Sam Neth</i>
+(<a href="http://www.identify.com/nethSoft/Pilot">nethSoft Pilot Page</a>)
+for convincing me that rewriting Jump itself in Java really was a good idea
+(I originally wrote it in C++).</p>
+
+<p><i>Thomas Werthmann-Auzinger</i>
+for the prodding that was required to get me to actually release the source.</p>
+
+<hr>
+<address>
+Jump is Copyright &copy; 1996,1997 by Greg Hewgill<br>
+This document revised 10/23/97<br>
+Email: <a href="mailto:gregh@lightspeed.net">gregh@lightspeed.net</a><br>
+<a href="http://userzweb.lightspeed.net/~gregh/pilot/jump">Jump Home Page</a><br>
+</address>
+<br>
+<small>Java and all Java-based trademarks and logos are trademarks or registered trademarks of Sun Microsystems, Inc. in the U.S. and other countries.</small>
+</body>
+</html>

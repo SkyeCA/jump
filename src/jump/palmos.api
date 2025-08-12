@@ -1,0 +1,581 @@
+//alm
+ULong    AlmGetAlarm(UInt cardNo, LocalID dbID, DWordPtr refP);
+Err      AlmSetAlarm(UInt cardNo, LocalID dbID, DWord ref, ULong alarmSeconds, Boolean quiet);
+
+//category
+void     CategoryCreateList(DmOpenRef db, ListPtr lst, Word currentCategory, Boolean showAll);
+Boolean  CategoryEdit(DmOpenRef db, WordPtr category);
+Word     CategoryFind(DmOpenRef db, CharPtr name);
+void     CategoryFreeList(DmOpenRef db, ListPtr list);
+void     CategoryGetName(DmOpenRef db, Word index, CharPtr name);
+Word     CategoryGetNext(DmOpenRef db, Word index);
+void     CategoryTruncateName(CharPtr name, Word maxWidth);
+void     CategorySetTriggerLabel(ControlPtr ctl, CharPtr name);
+Boolean  CategorySelect(DmOpenRef db, FormPtr frm, Word ctlID, Word lstID, Boolean title, WordPtr categoryP, CharPtr categoryName);
+
+//clipboard
+void     ClipboardAddItem(ClipboardFormatType format, VoidPtr ptr, Word length);
+VoidHand ClipboardGetItem(ClipboardFormatType format, WordPtr length);
+
+//ctl
+void     CtlDrawControl(ControlPtr ControlP);
+void     CtlEraseControl(ControlPtr ControlP);
+CharPtr  CtlGetLabel(ControlPtr ControlP);
+short    CtlGetValue(ControlPtr ControlP);
+Boolean  CtlHandleEvent(ControlPtr ControlP, EventPtr EventP);
+void     CtlHideControl(ControlPtr ControlP);
+void     CtlHitControl(ControlPtr ControlP);
+Boolean  CtlEnabled(ControlPtr ControlP);
+void     CtlSetEnabled(ControlPtr ControlP, Boolean enable);
+void     CtlSetLabel(ControlPtr ControlP, CharPtr newLabel);
+void     CtlSetUsable(ControlPtr ControlP, Boolean usable);
+void     CtlSetValue(ControlPtr ControlP, short newValue);
+void     CtlShowControl(ControlPtr ControlP);
+
+//dm
+Err      DmArchiveRecord(DmOpenRef dbR, UInt index);
+Err      DmAttachRecord(DmOpenRef dbR, UIntPtr atP, Handle newH, Handle* oldHP);
+Err      DmAttachResource(DmOpenRef dbR, VoidHand newH, ULong resType, Int resID);
+Err      DmCloseDatabase(DmOpenRef dbR);
+Err      DmCreateDatabase(UInt cardNo, CharPtr nameP, ULong creator, ULong type, Boolean resDB);
+Err      DmCreateDatabaseFromImage(Ptr bufferP);
+Err      DmDatabaseInfo(UInt cardNo, LocalID dbID, CharPtr nameP, UIntPtr attributesP, UIntPtr versionP, ULongPtr crDateP, ULongPtr modDateP, ULongPtr bckUpDateP, ULongPtr modNumP, LocalID* appInfoIDP, LocalID* sortInfoIDP, ULongPtr typeP, ULongPtr creatorP);
+Err      DmDatabaseSize(UInt cardNo, LocalID dbID, ULongPtr numRecordsP, ULongPtr totalBytesP, ULongPtr dataBytesP);
+Err      DmDeleteDatabase(UInt cardNo, LocalID dbID);
+Err      DmDeleteRecord(DmOpenRef dbR, UInt index);
+Err      DmDetachRecord(DmOpenRef dbR, UInt index, Handle* oldHP);
+Err      DmDetachResource(DmOpenRef dbR, Int index, VoidHand* oldHP);
+LocalID  DmFindDatabase(UInt cardNo, CharPtr nameP);
+Err      DmFindRecordByID(DmOpenRef dbR, ULong uniqueID, UIntPtr indexP);
+Int      DmFindResource(DmOpenRef dbR, ULong resType, Int resID, VoidHand findResH);
+Int      DmFindResourceType(DmOpenRef dbR, ULong resType, Int typeIndex);
+//UInt     DmFindSortPosition(DmOpenRef dbR, VoidPtr newRecord, DmComparF* compar, Int other);
+LocalID  DmGetAppInfoID(DmOpenRef dbR);
+LocalID  DmGetDatabase(UInt cardNo, UInt index);
+Err      DmGetLastErr();
+Err      DmGetNextDatabaseByTypeCreator(Boolean newSearch, DmSearchStatePtr stateInfoP, ULong type, ULong creator, Boolean onlyLatestVers, UIntPtr cardNoP, LocalID* dbIDP);
+VoidHand DmGetRecord(DmOpenRef dbR, UInt index);
+VoidHand DmGetResource(ULong type, Int ID);
+VoidHand DmGetResourceIndex(DmOpenRef dbR, Int index);
+VoidHand DmGet1Resource(ULong type, Int ID);
+//Err      DmInsertionSort(DmOpenRef dbR, DmComparF* compar, Int other);
+Err      DmMoveCategory(DmOpenRef dbR, UInt toCategory, UInt fromCategory, Boolean dirty);
+Err      DmMoveRecord(DmOpenRef dbR, UInt from, UInt to);
+VoidHand DmNewHandle(DmOpenRef dbR, ULong size);
+DmOpenRef DmNextOpenDatabase(DmOpenRef currentP);
+DmOpenRef DmNextOpenResDatabase(DmOpenRef dbR);
+VoidHand DmNewRecord(DmOpenRef dbR, UIntPtr atP, ULong size);
+VoidHand DmNewResource(DmOpenRef dbR, ULong resType, Int resID, ULong size);
+UInt     DmNumDatabases(UInt cardNo);
+UInt     DmNumRecords(DmOpenRef dbR);
+UInt     DmNumRecordsInCategory(DmOpenRef dbR, UInt category);
+UInt     DmNumResources(DmOpenRef dbR);
+DmOpenRef DmOpenDatabase(UInt cardNo, LocalID dbID, UInt mode);
+DmOpenRef DmOpenDatabaseByTypeCreator(ULong type, ULong creator, UInt mode);
+Err      DmOpenDatabaseInfo(DmOpenRef dbR, LocalID* dbIDP, UIntPtr openCountP, UIntPtr modeP, UIntPtr cardNoP, BooleanPtr resDBP);
+UInt     DmPositionInCategory(DmOpenRef dbR, UInt index, UInt category);
+VoidHand DmQueryNextInCategory(DmOpenRef dbR, UIntPtr indexP, UInt category);
+VoidHand DmQueryRecord(DmOpenRef dbR, UInt index);
+//Err      DmQuickSort(DmOpenRef dbR, DmComparF* compar, Int other);
+Err      DmRecordInfo(DmOpenRef dbR, UInt index, UBytePtr attrP, ULongPtr uniqueIDP, LocalID* chunkIDP);
+Err      DmResourceInfo(DmOpenRef dbR, Int index, ULongPtr resTypeP, IntPtr resIDP, LocalID* chunkLocalIDP);
+Err      DmReleaseRecord(DmOpenRef dbR, UInt index, Boolean dirty);
+Err      DmReleaseResource(VoidHand resourceH);
+Err      DmRemoveRecord(DmOpenRef dbR, UInt index);
+Err      DmRemoveResource(DmOpenRef dbR, Int index);
+Err      DmRemoveSecretRecords(DmOpenRef dbR);
+Err      DmResetRecordStates(DmOpenRef dbR);
+VoidHand DmResizeRecord(DmOpenRef dbR, UInt index, ULong newSize);
+VoidHand DmResizeResource(VoidHand resourceH, ULong newSize);
+Int      DmSearchRecord(VoidHand recH, DmOpenRef* dbRP);
+Int      DmSearchResource(ULong resType, Int resId, VoidHand resH, DmOpenRef* dbRP);
+Err      DmSeekRecordInCategory(DmOpenRef dbR, UIntPtr indexP, Int offset, Int direction, UInt category);
+Err      DmSet(VoidPtr recordP, ULong offset, ULong bytes, Byte value);
+Err      DmSetDatabaseInfo(UInt cardNo, LocalID dbID, CharPtr nameP, UIntPtr attributesP, UIntPtr versionP, ULongPtr crDateP, ULongPtr modDateP, ULongPtr bckUpDateP, ULongPtr modNumP, LocalID* appInfoIDP, LocalID* sortInfoIDP, ULongPtr typeP, ULongPtr creatorP);
+Err      DmSetRecordInfo(DmOpenRef dbR, UInt index, UBytePtr attrP, ULongPtr uniqueIDP);
+Err      DmSetResourceInfo(DmOpenRef dbR, Int index, ULongPtr resTypeP, IntPtr resIDP);
+Err      DmStrCopy(VoidPtr recordP, ULong offset, CharPtr srcP);
+Err      DmWrite(VoidPtr recordP, ULong ofset, VoidPtr srcP, ULong bytes);
+Err      DmWriteCheck(VoidPtr recordP, ULong ofset, ULong bytes);
+
+//err
+//void     ErrDisplay(CharPtr message);
+void     ErrDisplayFileLineMsg(CharPtr filename, UInt lineno, CharPtr msg);
+//void     ErrFatalDisplayIf(Boolean condition, CharPtr message);
+//void     ErrNonFatalDisplayIf(Boolean condition, CharPtr message);
+//void     ErrThrow(Long err);
+
+//evt
+void     EvtAddEventToQueue(EventPtr event);
+void     EvtCopyEvent(EventPtr source, EventPtr dest);
+Err      EvtDequeuePenPoint(PointType* retP);
+Err      EvtDequeuePenStrokeInfo(PointType* startPtP, PointType* endPtP);
+void     EvtEnableGraffiti(Boolean enable);
+Err      EvtEnqueueKey(UInt ascii, UInt keycode, UInt modifiers);
+Err      EvtFlushKeyQueue();
+Err      EvtFlushNextPenStroke();
+Err      EvtFlushPenQueue();
+void     EvtGetEvent(EventPtr event, Long timeout);
+void     EvtGetPen(SWord* pScreenX, SWord* pScreenY, Boolean* pPenDown);
+//PenBtnInfoPtr  EvtGetPenBtnList(UIntPtr numButtons);
+Boolean  EvtKeyQueueEmpty();
+ULong    EvtKeyQueueSize();
+ULong    EvtPenQueueSize();
+Err      EvtProcessSoftKeyStroke(PointType* startPtP, PointType* endPtP);
+Word     EvtResetAutoOffTimer();
+Err      EvtWakeup();
+
+//find
+//Boolean  FindDrawHeader(FindParamsPtr params, CharPtr title);
+//void     FindGetLineBounds(FindParamsPtr params, RectanglePtr r);
+//void     FindSaveMatch(FindParamsPtr params, UInt recordNum, Word pos, UInt fieldNum, DWord appCustom, UInt dbCardNo, LocalID rdbID);
+void     FindStrInStr(CharPtr strToSearch, CharPtr strToFind, WordPtr posP);
+
+//fld
+Word     FldCalcFieldHeight(CharPtr chars, Word maxWidth);
+void     FldCompactText(FieldPtr fld);
+void     FldCopy(FieldPtr fld);
+void     FldCut(FieldPtr fld);
+void     FldDelete(FieldPtr fld, Word start, Word end);
+Boolean  FldDirty(FieldPtr fld);
+void     FldDrawField(FieldPtr fld);
+void     FldEraseField(FieldPtr fld);
+void     FldFreeMemory(FieldPtr fld);
+void     FldGetAttributes(FieldPtr fld, FieldAttrPtr attrP);
+void     FldGetBounds(FieldPtr fld, RectanglePtr rect);
+FontID   FldGetFont(FieldPtr fld);
+Word     FldGetInsPtPosition(FieldPtr fld);
+Word     FldGetMaxChars(FieldPtr fld);
+Word     FldGetScrollPosition(FieldPtr fld);
+void     FldGetSelection(FieldPtr fld, WordPtr startPosition, WordPtr endPosition);
+Word     FldGetTextAllocatedSize(FieldPtr fld);
+Handle   FldGetTextHandle(FieldPtr fld);
+Word     FldGetTextHeight(FieldPtr fld);
+Word     FldGetTextLength(FieldPtr fld);
+CharPtr  FldGetTextPtr(Handle fld);
+Word     FldGetVisibleLines(FieldPtr fld);
+void     FldGrabFocus(FieldPtr fld);
+Boolean  FldHandleEvent(FieldPtr fld, EventPtr EventP);
+Boolean  FldInsert(FieldPtr fld, CharPtr insertChars, Word insertLen);
+Boolean  FldMakeFullyVisible(FieldPtr fld);
+void     FldPaste(FieldPtr field);
+void     FldRecalculateField(FieldPtr fld, Boolean redraw);
+void     FldReleaseFocus(FieldPtr fld);
+Boolean  FldScrollable(FieldPtr fld, DirectionType direction);
+void     FldScrollField(FieldPtr fld, Word linesToScroll, DirectionType direction);
+void     FldSendChangeNotification(FieldPtr fld);
+void     FldSendHeightChangeNotification(FieldPtr fld);
+void     FldSetAttributes(FieldPtr fld, FieldAttrPtr attrP);
+void     FldSetBounds(FieldPtr fld, RectanglePtr rect);
+void     FldSetDirty(FieldPtr fld, Boolean dirty);
+void     FldSetFont(FieldPtr fld, FontID fontID);
+void     FldSetInsPtPosition(FieldPtr fld, Word pos);
+void     FldSetMaxChars(FieldPtr fld, Word maxChars);
+void     FldSetScrollPosition(FieldPtr fld, Word pos);
+void     FldSetSelection(FieldPtr fld, Word startPosition, Word endPosition);
+void     FldSetText(FieldPtr fld, VoidHand textHandle, Word offset, Word size);
+void     FldSetTextAllocatedSize(FieldPtr fld, Word allocatedSize);
+void     FldSetTextHandle(FieldPtr fld, Handle textHandle);
+void     FldSetTextPtr(FieldPtr fld, CharPtr textP);
+void     FldSetUsable(FieldPtr fld, Boolean usable);
+void     FldUndo(FieldPtr fld);
+Word     FldWordWrap(CharPtr chars, Word maxWidth);
+
+//fnt
+//short    FntAccentHeight();
+//short    FntAscent();
+short    FntAverageCharWidth();
+short    FntBaseLine();
+short    FntCharHeight();
+void     FntCharsInWidth(CharPtr string, Int* stringWidthP, Int* stringLengthP, Boolean* fitWithinWidth);
+short    FntCharsWidth(CharPtr pChars, Word length);
+short    FntCharWidth(char ch);
+short    FntDescenderHeight();
+FontID   FntGetFont();
+FontPtr  FntGetFontPtr();
+short    FntLineHeight();
+short    FntLineWidth(CharPtr pChars, Word length);
+//Boolean  FntProportionalFont();
+FontID   FntSetFont(FontID fontID);
+
+//fpl
+//not supported
+
+//frm
+Word     FrmAlert(Word alertId);
+void     FrmCloseAllForms();
+void     FrmCopyLabel(FormPtr frm, Word labelID, CharPtr newLabel);
+void     FrmCopyTitle(FormPtr frm, CharPtr newTitle);
+Word     FrmCustomAlert(Word alertId, CharPtr s1, CharPtr s2, CharPtr s3);
+void     FrmDeleteForm(FormPtr frm);
+Boolean  FrmDispatchEvent(EventPtr eventP);
+Word     FrmDoDialog(FormPtr frm);
+void     FrmDrawForm(FormPtr frm);
+void     FrmEraseForm(FormPtr frm);
+FormPtr  FrmGetActiveForm();
+Word     FrmGetActiveFormID();
+Byte     FrmGetControlGroupSelection(FormPtr frm, Byte groupNum);
+short    FrmGetControlValue(FormPtr frm, Word objIndex);
+FormPtr  FrmGetFirstForm();
+Word     FrmGetFocus(FormPtr frm);
+void     FrmGetFormBounds(FormPtr frm, RectanglePtr r);
+Word     FrmGetFormId(FormPtr frm);
+FormPtr  FrmGetFormPtr(Word formId);
+VoidPtr  FrmGetGadgetData(FormPtr frm, Word objIndex);
+CharPtr  FrmGetLabel(FormPtr frm, Word labelID);
+Word     FrmGetNumberOfObjects(FormPtr frm);
+void     FrmGetObjectBounds(FormPtr frm, Word ObjIndex, RectanglePtr r);
+Word     FrmGetObjectId(FormPtr frm, Word objIndex);
+Word     FrmGetObjectIndex(FormPtr frm, Word objID);
+void     FrmGetObjectPosition(FormPtr frm, Word objIndex, SWordPtr x, SWordPtr y);
+Handle   FrmGetObjectPtr(FormPtr frm, Word objIndex);
+FormObjectKind FrmGetObjectType(FormPtr frm, Word objIndex);
+CharPtr  FrmGetTitle(FormPtr frm);
+Boolean  FrmGetUserModifiedState(FormPtr frm);
+WinHandle FrmGetWindowHandle(FormPtr frm);
+void     FrmGotoForm(Word formId);
+Boolean  FrmHandleEvent(FormPtr frm, EventPtr event);
+void     FrmHelp(Word helpMsgId);
+void     FrmHideObject(FormPtr frm, Word objIndex);
+FormPtr  FrmInitForm(Word rscID);
+void     FrmPopupForm(Word formId);
+void     FrmReturnToForm(Word formId);
+void     FrmSaveAllForms();
+void     FrmSetActiveForm(FormPtr frm);
+void     FrmSetCategoryLabel(FormPtr frm, Word objIndex, CharPtr newLabel);
+void     FrmSetControlGroupSelection(FormPtr frm, Byte groupNum, Word controlID);
+void     FrmSetControlValue(FormPtr frm, Word objIndex, short newValue);
+//void     FrmSetEventHandler(FormPtr frm, FormEventHandlerPtr handler);
+void     FrmSetFocus(FormPtr frm, Word objIndex);
+void     FrmSetGadgetData(FormPtr frm, Word objIndex, VoidPtr data);
+void     FrmSetNotUserModified(FormPtr frm);
+void     FrmSetObjectPositon(FormPtr frm, Word objIndex, SWord x, SWord y);
+void     FrmSetTitle(FormPtr frm, CharPtr newTitle);
+void     FrmShowObject(FormPtr frm, Word objIndex);
+void     FrmUpdateScrollers(FormPtr frm, Word upIndex, Word downIndex, Boolean scrollableUp, Boolean scrollableDown);
+void     FrmUpdateForm(Word formId, Word updateCode);
+Boolean  FrmVisible(FormPtr frm);
+
+//ftr
+Err      FtrGet(DWord creator, UInt featureNum, DWordPtr valueP);
+Err      FtrGetByIndex(UInt index, Boolean romTable, DWordPtr creatorP, UIntPtr numP, DWordPtr valueP);
+Err      FtrSet(DWord creator, UInt featureNum, DWord newValue);
+Err      FtrUnregister(DWord creator, UInt featureNum);
+
+//getchar
+//not supported
+
+//grf
+Err      GrfAddMacro(CharPtr nameP, VoidPtr macroDataP, Word dataLen);
+Err      GrfAddPoint(PointType* ptP);
+Err      GrfCleanState();
+Err      GrfDeleteMacro(Word index);
+Err      GrfFindBranch(Word flags);
+Err      GrfFilterPoints();
+Err      GrfFlushPoints();
+Err      GrfGetAndExpandMacro(CharPtr nameP, VoidPtr macroDataP, WordPtr dataLenP);
+Err      GrfGetGlyphMapping(Word glyphID, WordPtr flagsP, void* dataPtrP, WordPtr dataLenP, WordPtr uncertainLenP);
+Err      GrfGetMacro(CharPtr nameP, VoidPtr macroDataP, WordPtr dataLenP);
+Err      GrfGetMacroName(Word index, CharPtr nameP);
+Err      GrfGetNumPoints(WordPtr numPtsP);
+Err      GrfGetPoint(Word index, PointType* pointP);
+Err      GrfGetState(Boolean* capsLockP, Boolean* numLockP, WordPtr tempShiftP, Boolean* autoShiftedP);
+Err      GrfInitState();
+//Err      GrfMatch(WordPtr flagsP, void* dataPtrP, WordPtr dataLenP, WordPtr uncertainLenP, GrfMatchInfoPtr matchInfoP);
+//Err      GrfMatchGlyph(GrfMatchInfoPtr matchInfoP, Word maxUncertainty, Word maxMatches);
+Err      GrfProcessStroke(PointType* startPtP, PointType* endPtP, Boolean upShift);
+Err      GrfSetState(Boolean capsLock, Boolean numLock, Boolean upperShift);
+//void     SysGrfShortCutListDialog();
+
+//gsi
+void     GsiEnable(Boolean enableIt);
+Boolean  GsiEnabled();
+void     GsiInitialize();
+void     GsiSetLocation(short x, short y);
+void     GsiSetShiftState(Word lockFlags, Word tempShift);
+
+//inspt
+void     InsPtEnable(Boolean enableIt);
+Boolean  InsPtEnabled();
+short    InsPtGetHeight();
+void     InsPtGetLocation(shortPtr x, shortPtr y);
+void     InsPtSetHeight(short height);
+void     InsPtSetLocation(short x, short y);
+
+//key
+DWord    KeyCurrentState();
+Err      KeyRates(Boolean set, WordPtr initDelayP, WordPtr periodP, WordPtr doubleTapDelayP, BooleanPtr queueAheadP);
+
+//lst
+void     LstDrawList(ListPtr ListP);
+void     LstEraseList(ListPtr ListP);
+Word     LstGetNumberOfItems(ListPtr ListP);
+Word     LstGetSelection(ListPtr ListP);
+CharPtr  LstGetSelectionText(ListPtr ListP, Word itemNum);
+Boolean  LstHandleEvent(ListPtr ListP, EventPtr pEvent);
+void     LstMakeItemVisible(ListPtr ListP, Word itemNum);
+short    LstPopupList(ListPtr ListP);
+//void     LstSetDrawFunction(ListPtr ListP, ListDrawDataFuncPtr func);
+void     LstSetHeight(ListPtr ListP, Word visibleItems);
+//void     LstSetListChoices(ListPtr ListP, char** itemsText, UInt numItems);
+void     LstSetPosition(ListPtr ListP, short x, short y);
+void     LstSetSelection(ListPtr ListP, Word itemNum);
+void     LstSetTopItem(ListPtr ListP, UInt itemNum);
+
+//mem
+Err      MemCardInfo(UInt cardNo, CharBuf cardNameP, CharBuf manufNamP, UIntPtr versionP, ULongPtr crDateP, ULongPtr romSizeP, ULongPtr ramSizeP, ULongPtr freeBytesP);
+Err      MemChunkFree(voidptr chunkDataP);
+Word     MemDebugMode();
+Boolean  MemHandleDataStorage(VoidHand h);
+UInt     MemHandleCardNo(VoidHand h);
+Err      MemHandleFree(VoidHand h);
+UInt     MemHandleHeapID(VoidHand h);
+VoidPtr  MemHandleLock(VoidHand h);
+VoidHand MemHandleNew(ULong size);
+Err      MemHandleResize(VoidHand h, ULong newSize);
+ULong    MemHandleSize(VoidHand h);
+LocalID  MemHandleToLocalID(VoidHand h);
+Err      MemHandleUnlock(VoidHand h);
+Err      MemHeapCheck(UInt heapID);
+Err      MemHeapCompact(UInt heapID);
+Boolean  MemHeapDynamic(UInt heapID);
+UInt     MemHeapFlags(UInt heapID);
+Err      MemHeapFreeBytes(UInt heapID, ULongPtr freeP, ULongPtr maxP);
+UInt     MemHeapID(UInt cardNo, UInt heapIndex);
+Err      MemHeapScramble(UInt heapID);
+ULong    MemHeapSize(UInt heapID);
+LocalIDKind MemLocalIDKind(LocalID local);
+VoidPtr  MemLocalIDToGlobal(LocalID local, UInt cardNo);
+VoidPtr  MemLocalIDToLockedPtr(LocalID local, UInt cardNo);
+VoidPtr  MemLocalIDToPtr(LocalID local, UInt cardNo);
+Err      MemMove(voidptr dstP, voidptr srcP, ULong numBytes);
+UInt     MemNumCards();
+UInt     MemNumHeaps(UInt cardNo);
+UInt     MemNumRAMHeaps(UInt cardNo);
+UInt     MemPtrCardNo(voidptr chunkP);
+Boolean  MemPtrDataStorage(voidptr p);
+Err      MemPtrFree(voidptr p);
+UInt     MemPtrHeapID(voidptr p);
+LocalID  MemPtrToLocalID(voidptr chunkP);
+VoidPtr  MemPtrNew(ULong size);
+VoidHand MemPtrRecoverHandle(voidptr p);
+Err      MemPtrResize(voidptr p, ULong newSize);
+Err      MemSet(voidptr dstP, ULong numBytes, Byte value);
+Err      MemSetDebugMode(Word flags);
+ULong    MemPtrSize(voidptr p);
+Err      MemPtrUnlock(voidptr p);
+Err      MemStoreInfo(UInt cardNo, UInt storeNumber, UIntPtr versionP, UIntPtr flagsP, CharBuf nameP, ULongPtr crDateP, ULongPtr bckUpDateP, ULongPtr heapListOffsetP, ULongPtr initCodeOffset1P, ULongPtr initCodeOffset2P, LocalID* databaseDirIDP);
+
+//menu
+void     MenuDispose(MenuBarPtr MenuP);
+void     MenuDrawMenu(MenuBarPtr MenuP);
+void     MenuEraseStatus(MenuBarPtr MenuP);
+MenuBarPtr MenuGetActiveMenu();
+Boolean  MenuHandleEvent(MenuBarPtr MenuP, EventPtr event, WordPtr error);
+MenuBarPtr MenuInit(Word resourceId);
+MenuBarPtr MenuSetActiveMenu(MenuBarPtr MenuP);
+
+//misc
+void     AbtShowAbout(ULong creator);
+Word     Crc16CalcBlock(VoidPtr bufP, UInt count, Word crc);
+Boolean  DayHandleEvent(DaySelectorPtr pSelector, EventPtr pEvent);
+
+//pen
+Err      PenCalibrate(PointType* digTopLeftP, PointType* digBotRightP, PointType* scrTopLeftP, PointType* scrBotRightP);
+Err      PenResetCalibration();
+
+//pref
+Boolean  PrefGetAppPreferences(ULong type, Int version, VoidPtr prefs, Word prefsSize);
+void     PrefGetPreferences(SystemPreferencesPtr p);
+DmOpenRef PrefOpenPreferenceDB();
+void     PrefSetAppPreferences(ULong type, Int version, VoidPtr prefs, Word prefsSize);
+void     PrefSetPreferences(SystemPreferencesPtr p);
+
+//psr
+//not supported
+
+//ser
+Err      &SerClearErr(UInt refNum);
+Err      &SerClose(UInt refNum);
+Err      &SerGetSettings(UInt refNum, SerSettingsPtr settingsP);
+Word     &SerGetStatus(UInt refNum, BooleanPtr ctsOnP, BooleanPtr dtsOnP);
+Err      &SerOpen(UInt refNum, UInt port, ULong baud);
+Err      &SerReceive(UInt refNum, VoidPtr bufP, ULong bytes, Long timeout);
+Err      &SerReceiveCheck(UInt refNum, ULongPtr numBytesP);
+void     &SerReceiveFlush(UInt refNum, Long timeout);
+Err      &SerReceiveWait(UInt refNum, ULong bytes, Long timeout);
+Err      &SerSend(UInt refNum, VoidPtr bufP, ULong size);
+Err      &SerSend(UInt refNum, ULong bufP, ULong size);
+Err      &SerSendWait(UInt refNum, Long timeout);
+Err      &SerSetReceiveBuffer(UInt refNum, VoidPtr bufP, UInt bufSize);
+Err      &SerSetSettings(UInt refNum, SerSettingsPtr settingsP);
+
+//slk
+Err      SlkClose();
+Err      SlkCloseSocket(UInt socket);
+Err      SlkFlushSocket(UInt socket, Long timeout);
+Err      SlkOpen();
+Err      SlkOpenSocket(UInt libRefNum, UIntPtr socketP, Boolean staticSocket);
+Err      SlkReceivePacket(UInt socket, Boolean andOtherSockets, SlkPktHeaderPtr headerP, void* bodyP, UInt bodySize, Long timeout);
+//Err      SlkSendPacket(SlkPktHeaderPtr headerP, SlkWriteDataPtr writeList);
+//Err      SlkSetSocketListener(UInt socket, SlkSocketListenPtr socketP);
+Err      SlkSocketRefNum(UInt socket, UIntPtr refNumP);
+Err      SlkSocketSetTimeout(UInt socket, Long timeout);
+
+//snd
+Err      SndDoCmd(VoidPtr chanP, SndCommandPtr cmdP, Boolean noWait);
+void     SndGetDefaultVolume(UIntPtr alarmAmpP, UIntPtr sysAmpP, UIntPtr defAmpP);
+void     SndPlaySystemSound(SndSysBeepType beepID);
+void     SndSetDefaultVolume(UIntPtr alarmAmpP, UIntPtr sysAmpP, UIntPtr defAmpP);
+
+//str
+Int      StrAToI(CharPtr str);
+//StrCat not supported
+Int      StrCaselessCompare(CharPtr s1, CharPtr s2);
+//StrChr not supported
+Int      StrCompare(CharPtr s1, CharPtr s2);
+//StrCopy not supported
+//StrItoA not supported
+//StrItoH not supported
+UInt     StrLen(CharPtr str);
+//StrStr not supported
+//StrToLower not supported
+
+//sys
+Err      SysAppLaunch(UInt cardNo, LocalID dbID, UInt launchFlags, Word cmd, Ptr cmpPBP, DWord* resultP);
+UInt     SysBatteryInfo(Boolean set, UIntPtr warnThresholdP, UIntPtr criticalThresholdP, UIntPtr maxTicksP, SysBatteryKind* kindP, Boolean* pluggedIn);
+Err      SysBroadcastActionCode(Word cmd, Ptr cmdPBP);
+void     SysCopyStringResource(CharPtr string, UInt theID);
+Err      SysCurAppDatabase(UIntPtr cardNoP, LocalID* dbIDP);
+VoidHand SysFormPointerArrayToStrings(CharPtr c, Int stringCount);
+Boolean  SysHandleEvent(EventPtr eventP);
+//void     SysInsertionSort(Byte baseP, Int numOfElements, Int width, CmpFuncPtr comparF, Long other);
+void     SysKeyboardDialog();
+Word     SysLibFind(CharPtr nameP, UIntPtr refNumP);
+//void     SysQSort(Byte baseP, Int numOfElements, Int width, CmpFuncPtr comparF, Long other);
+Int      SysRandom(ULong newSeed);
+void     SysReset();
+UInt     SysSetAutoOffTime(UInt seconds);
+Err      SysTaskDelay(Long delay);
+Err      SysUIAppSwitch(UInt cardNo, LocalID dbID, Word cmd, Ptr cmdPBP);
+
+//tbl
+void     TblDrawTable(TablePtr table);
+Boolean  TblEditing(TablePtr table);
+void     TblEraseTable(TablePtr table);
+Boolean  TblFindRowData(TablePtr table, ULong data, WordPtr rowP);
+Boolean  TblFindRowID(TablePtr table, Word id, WordPtr rowP);
+void     TblGetBounds(TablePtr table, RectanglePtr r);
+Word     TblGetColumnSpacing(TablePtr table, Word column);
+Word     TblGetColumnWidth(TablePtr table, Word column);
+FieldPtr TblGetCurrentField(TablePtr table);
+void     TblGetItemBounds(TablePtr table, Word row, Word column, RectanglePtr r);
+Word     TblGetItemInt(TablePtr table, Word row, Word column);
+Word     TblGetLastUsableRow(TablePtr table);
+Word     TblGetNumberOfRows(TablePtr table);
+ULong    TblGetRowData(TablePtr table, Word row);
+Word     TblGetRowHeight(TablePtr table, Word row);
+Word     TblGetRowID(TablePtr table, Word row);
+Boolean  TblGetSelection(TablePtr table, WordPtr rowP, WordPtr columnP);
+void     TblGrabFocus(TablePtr table, Word row, Word column);
+Boolean  TblHandleEvent(TablePtr table, EventPtr event);
+void     TblInsertRow(TablePtr table, Word row);
+void     TblMarkRowInvalid(TablePtr table, Word row);
+void     TblMarkTableInvalid(TablePtr table);
+void     TblRedrawTable(TablePtr table);
+void     TblReleaseFocus(TablePtr table);
+void     TblRemoveRow(TablePtr table, Word row);
+Boolean  TblRowInvalid(TablePtr table, Word row);
+Boolean  TblRowSelectable(TablePtr table, Word row);
+Boolean  TblRowUsable(TablePtr table, Word row);
+void     TblSelectItem(TablePtr table, Word row, Word column);
+void     TblSetColumnSpacing(TablePtr table, Word column, Word spacing);
+void     TblSetColumnUsable(TablePtr table, Word column, Boolean usable);
+void     TblSetColumnWidth(TablePtr table, Word column, Word width);
+//void     TblSetCustomDrawProcedure(TablePtr table, Word column, VoidPtr drawCallback);
+void     TblSetItemInt(TablePtr table, Word row, Word column, Word value);
+void     TblSetItemPtr(TablePtr table, Word row, Word column, VoidPtr value);
+void     TblSetItemStyle(TablePtr table, Word row, Word column, TableItemStyleType type);
+//void     TblSetLoadDataProcedure(TablePtr table, Word column, TableLoadDataFuncPtr loadDataCallback);
+void     TblSetRowData(TablePtr table, Word row, ULong data);
+void     TblSetRowHeight(TablePtr table, Word row, Word height);
+void     TblSetRowID(TablePtr table, Word row, Word id);
+void     TblSetRowSelectable(TablePtr table, Word row, Boolean selectable);
+void     TblSetRowUsable(TablePtr table, Word row, Boolean usable);
+//void     TblSetSaveDataProcedure(TablePtr table, Word column, VoidPtr saveDataCallback);
+void     TblUnhighlightSelection(TablePtr table);
+
+//time
+void     DateAdjust(DatePtr dateP, Long adjustment);
+void     DateDaysToDate(ULong days, DatePtr dateP);
+void     DateSecondsToDate(ULong seconds, DatePtr dateP);
+void     DateToAscii(Byte months, Byte days, Word years, DateFormatType dateFormat, CharBuf pString);
+ULong    DateToDays(DateType date);
+void     DateToDOWDMFormat(Byte months, Byte days, Word years, DateFormatType dateFormat, CharBuf pString);
+UInt     DayOfMonth(UInt month, UInt day, UInt year);
+UInt     DayOfWeek(UInt month, UInt day, UInt year);
+UInt     DaysInMonth(UInt month, UInt year);
+Boolean  SelectDay(int* month, int* day, int* year, CharPtr title);
+void     TimAdjust(DateTimePtr dateTimeP, Long adjustment);
+ULong    TimDateTimeToSeconds(DateTimePtr dateTimeP);
+ULong    TimGetSeconds();
+ULong    TimGetTicks();
+void     TimSecondsToDateTime(ULong seconds, DateTimePtr dateTimeP);
+void     TimSetSeconds(ULong seconds);
+void     TimeToAscii(Byte hours, Byte minutes, TimeFormatType timeFormat, CharPtr pString);
+
+//win
+void     WinAddWindow(WinHandle winHandle);
+void     WinClipRectangle(RectanglePtr r);
+void     WinCopyRectangle(WinHandle srcWin, WinHandle dstWin, RectanglePtr srcRect, SWord destX, SWord destY, ScrOperation mode);
+WinHandle WinCreateWindow(RectanglePtr bounds, FrameType frame, Boolean modal, Boolean focusable, WordPtr error);
+WinHandle WinCreateOffscreenWindow(SWord width, SWord height, WindowFormatType format, WordPtr error);
+void     WinDeleteWindow(WinHandle winHandle, Boolean eraseIt);
+void     WinDisableWindow(WinHandle winHandle);
+void     WinDisplayToWindowPt(SWordPtr extentX, SWordPtr extentY);
+void     WinDrawBitmap(BitmapPtr bitmapP, SWord x, SWord y);
+void     WinDrawChars(CharPtr chars, Word len, SWord x, SWord y);
+void     WinDrawGrayLine(SWord x1, SWord y1, SWord x2, SWord y2);
+void     WinDrawGrayRectangleFrame(FrameType frame, RectanglePtr r);
+void     WinDrawInvertedChars(CharPtr chars, Word len, SWord x, SWord y);
+void     WinDrawLine(SWord x1, SWord y1, SWord x2, SWord y2);
+void     WinDrawRectangle(RectanglePtr r, Word cornerDiam);
+void     WinDrawRectangleFrame(FrameType frame, RectanglePtr r);
+void     WinDrawWindowFrame();
+void     WinEnableWindow(WinHandle winHandle);
+void     WinEraseChars(CharPtr chars, Word len, SWord x, SWord y);
+void     WinEraseLine(SWord x1, SWord y1, SWord x2, SWord y2);
+void     WinEraseRectangle(RectanglePtr r, Word cornerDiam);
+void     WinEraseRectangleFrame(FrameType frame, RectanglePtr r);
+void     WinEraseWindow();
+void     WinFillLine(SWord x1, SWord y1, SWord x2, SWord y2);
+void     WinFillRectangle(RectanglePtr r, Word cornerDiam);
+WinHandle WinGetActiveWindow();
+void     WinGetClip(RectanglePtr r);
+void     WinGetDisplayExtent(SWordPtr extentX, SWordPtr extentY);
+WinHandle WinGetDisplayWindow();
+WinHandle WinGetDrawWindow();
+WinHandle WinGetFirstWindow();
+void     WinGetFramesRectangle(FrameType frame, RectanglePtr r, RectanglePtr obscuredRect);
+//void     WinGetPattern(CustomPatternType pattern);
+void     WinGetWindowBounds(RectanglePtr r);
+void     WinGetWindowExtent(SWordPtr extentX, SWordPtr extentY);
+void     WinGetWindowFrameRect(WinHandle winHandle, RectanglePtr r);
+//WinPtr   WinGetWindowPointer(WinHandle winHandle);
+void     WinInitializeWindow(WinHandle winHandle);
+void     WinInvertChars(CharPtr chars, Word len, SWord x, SWord y);
+void     WinInvertLine(SWord x1, SWord y1, SWord x2, SWord y2);
+void     WinInvertRectangle(RectanglePtr r, Word cornerDiam);
+void     WinInvertRectangleFrame(FrameType frame, RectanglePtr r);
+Boolean  WinModal(WinHandle winHandle);
+void     WinRemoveWindow(WinHandle winHandle);
+void     WinResetClip();
+void     WinRestoreBits(WinHandle winHandle, SWord destX, SWord destY);
+WinHandle WinSaveBits(RectanglePtr sourceP, WordPtr error);
+void     WinScrollRectangle(RectanglePtr r, DirectionType direction, SWord distance, RectanglePtr vacated);
+void     WinSetActiveWindow(WinHandle winHandle);
+void     WinSetClip(RectanglePtr r);
+WinHandle WinSetDrawWindow(WinHandle winHandle);
+//void     WinSetPattern(CustomPatternType pattern);
+UnderlineModeType WinSetUnderlineMode(UnderlineModeType mode);
+void     WinWindowToDisplayPt(SWordPtr extentX, SWordPtr extentY);
